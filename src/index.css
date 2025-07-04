@@ -38,20 +38,30 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
 
+    /* Portfolio specific colors */
+    --blue-light: 214 100% 97%;
+    --blue-primary: 217 91% 60%;
+    --gray-text: 215 16% 47%;
+    --gray-light: 220 13% 91%;
+    
+    /* Gradients */
+    --gradient-purple: linear-gradient(135deg, 263 70% 50%, 262 83% 58%);
+    --gradient-blue: linear-gradient(135deg, 217 91% 60%, 213 94% 68%);
+    --gradient-green: linear-gradient(135deg, 142 76% 36%, 158 64% 52%);
+    --gradient-pink: linear-gradient(135deg, 330 81% 60%, 348 83% 47%);
+    --gradient-orange: linear-gradient(135deg, 25 95% 53%, 31 100% 71%);
+    
+    /* Shadows */
+    --shadow-card: 0 10px 25px -5px hsl(220 13% 91% / 0.3);
+    --shadow-hover: 0 20px 40px -10px hsl(220 13% 91% / 0.4);
+    
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 

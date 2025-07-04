@@ -61,7 +61,23 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Portfolio specific colors
+				'blue-light': 'hsl(var(--blue-light))',
+				'blue-primary': 'hsl(var(--blue-primary))',
+				'gray-text': 'hsl(var(--gray-text))',
+				'gray-light': 'hsl(var(--gray-light))'
+			},
+			backgroundImage: {
+				'gradient-purple': 'var(--gradient-purple)',
+				'gradient-blue': 'var(--gradient-blue)',
+				'gradient-green': 'var(--gradient-green)',
+				'gradient-pink': 'var(--gradient-pink)',
+				'gradient-orange': 'var(--gradient-orange)'
+			},
+			boxShadow: {
+				'card': 'var(--shadow-card)',
+				'card-hover': 'var(--shadow-hover)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
