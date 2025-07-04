@@ -1,28 +1,37 @@
+import alumniMockup from "@/assets/alumni-android-mockup.jpg";
+import laravelMockup from "@/assets/laravel-project-mockup.jpg";
+import nodejsMockup from "@/assets/nodejs-project-mockup.jpg";
+import assignmentMockup from "@/assets/assignment-project-mockup.jpg";
+
 const WorksSection = () => {
   const projects = [
     {
-      title: "Hotel Management System",
-      description: "A comprehensive hotel booking and management system",
-      image: "🏨",
-      link: "#"
+      title: "Alumni Android App",
+      description: "Mobile application built with Kotlin for alumni networking and communication",
+      image: alumniMockup,
+      link: "https://github.com/gabrielblue/alumniandroid",
+      tech: "Kotlin"
     },
     {
-      title: "Bakery Website",
-      description: "Modern bakery website with online ordering",
-      image: "🍞",
-      link: "#"
+      title: "Laravel Web Application",
+      description: "Full-stack web platform built with Laravel, PHP and Bootstrap",
+      image: laravelMockup,
+      link: "https://github.com/gabrielblue/Laravel-project",
+      tech: "PHP, Laravel"
     },
     {
-      title: "Calculator App",
-      description: "Interactive calculator with advanced functions",
-      image: "🔢",
-      link: "#"
+      title: "Node.js Backend API",
+      description: "Server-side application with Express.js and registration system",
+      image: nodejsMockup,
+      link: "https://github.com/gabrielblue/Nodejs-",
+      tech: "Node.js, JavaScript"
     },
     {
-      title: "Portfolio Website",
-      description: "Professional portfolio showcase",
-      image: "💼",
-      link: "#"
+      title: "Frontend Assignment",
+      description: "Responsive web development project showcasing HTML, CSS skills",
+      image: assignmentMockup,
+      link: "https://github.com/gabrielblue/assingment",
+      tech: "HTML, CSS"
     }
   ];
 
@@ -45,16 +54,28 @@ const WorksSection = () => {
               key={index}
               className="group relative overflow-hidden rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2"
             >
-              <div className="aspect-video bg-gradient-blue flex items-center justify-center text-6xl sm:text-8xl transition-transform duration-300 group-hover:scale-110">
-                {project.image}
+              <div className="aspect-video relative overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute top-2 right-2 bg-blue-primary text-white px-2 py-1 rounded-md text-xs font-medium">
+                  {project.tech}
+                </div>
               </div>
               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
                 <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
                   <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
                   <p className="text-sm mb-4">{project.description}</p>
-                  <button className="bg-white text-foreground px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">
-                    View Project
-                  </button>
+                  <a 
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white text-foreground px-4 py-2 rounded-md hover:bg-gray-100 transition-colors inline-block"
+                  >
+                    View on GitHub
+                  </a>
                 </div>
               </div>
             </div>
