@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import logoImage from "@/assets/logo.png";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import userProfileImage from "@/assets/user-profile.jpg";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,9 +68,12 @@ const Navigation = () => {
           </li>
         </ul>
 
-        {/* Logo */}
+        {/* Profile Picture */}
         <div className="hidden md:block">
-          <img src={logoImage} alt="Logo" className="h-8 w-8 sm:h-10 sm:w-10" />
+          <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
+            <AvatarImage src={userProfileImage} alt="Gabriel Wambua" />
+            <AvatarFallback>GW</AvatarFallback>
+          </Avatar>
         </div>
 
         {/* Hamburger Menu - Mobile */}
@@ -86,6 +90,13 @@ const Navigation = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-blue-light border-t border-gray-light">
+          {/* Profile Picture in Mobile Menu */}
+          <div className="flex justify-center py-3 border-b border-gray-light">
+            <Avatar className="h-12 w-12">
+              <AvatarImage src={userProfileImage} alt="Gabriel Wambua" />
+              <AvatarFallback>GW</AvatarFallback>
+            </Avatar>
+          </div>
           <ul className="flex flex-col py-4 px-6 space-y-3">
             <li>
               <button 
