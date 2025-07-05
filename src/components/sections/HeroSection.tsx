@@ -1,55 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { removeBackground, loadImage } from "@/utils/backgroundRemoval";
-import { useEffect, useState } from "react";
 
 const HeroSection = () => {
-  const [processedImageUrl, setProcessedImageUrl] = useState<string>("");
-  const [isProcessing, setIsProcessing] = useState(false);
-
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     element?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  useEffect(() => {
-    const processImage = async () => {
-      try {
-        setIsProcessing(true);
-        
-        // Create image element from the current profile image
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        
-        img.onload = async () => {
-          try {
-            const blob = await removeBackground(img);
-            const url = URL.createObjectURL(blob);
-            setProcessedImageUrl(url);
-          } catch (error) {
-            console.error('Error processing image:', error);
-            // Fall back to original image
-            setProcessedImageUrl("/lovable-uploads/03349a1e-20f4-4c10-bc5b-76409c2d5104.png");
-          } finally {
-            setIsProcessing(false);
-          }
-        };
-        
-        img.onerror = () => {
-          console.error('Error loading image');
-          setProcessedImageUrl("/lovable-uploads/03349a1e-20f4-4c10-bc5b-76409c2d5104.png");
-          setIsProcessing(false);
-        };
-        
-        img.src = "/lovable-uploads/03349a1e-20f4-4c10-bc5b-76409c2d5104.png";
-      } catch (error) {
-        console.error('Error in processImage:', error);
-        setProcessedImageUrl("/lovable-uploads/03349a1e-20f4-4c10-bc5b-76409c2d5104.png");
-        setIsProcessing(false);
-      }
-    };
-
-    processImage();
-  }, []);
 
   return (
     <div id="home" className="min-h-screen bg-background relative flex flex-col pt-16 sm:pt-20 lg:pt-24">
@@ -78,17 +33,11 @@ const HeroSection = () => {
 
         {/* Profile Image */}
         <div className="flex justify-center lg:w-1/2">
-          {isProcessing ? (
-            <div className="w-48 sm:w-60 lg:w-80 h-48 sm:h-60 lg:h-80 bg-muted rounded-lg flex items-center justify-center">
-              <span className="text-muted-foreground">Processing image...</span>
-            </div>
-          ) : (
-            <img 
-              src={processedImageUrl || "/lovable-uploads/03349a1e-20f4-4c10-bc5b-76409c2d5104.png"} 
-              alt="Gabriel Wambua - Software Developer" 
-              className="rounded-lg shadow-card-hover w-48 sm:w-60 lg:w-80 h-auto transition-transform duration-300 hover:scale-105"
-            />
-          )}
+          <img 
+            src="/lovable-uploads/03349a1e-20f4-4c10-bc5b-76409c2d5104.png" 
+            alt="Gabriel Wambua - Software Developer" 
+            className="rounded-lg shadow-card-hover w-48 sm:w-60 lg:w-80 h-auto transition-transform duration-300 hover:scale-105"
+          />
         </div>
       </div>
     </div>
