@@ -40,7 +40,7 @@ const AboutSection = () => {
   const getAnimationClass = (index: number) => {
     return visibleItems.includes(index) 
       ? "opacity-100 translate-y-0" 
-      : "opacity-0 translate-y-8";
+      : "opacity-30 translate-y-4";
   };
 
   return (
