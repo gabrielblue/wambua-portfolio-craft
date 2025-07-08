@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import userProfileImage from "@/assets/user-profile.jpg";
 
 const HeroSection = () => {
   const scrollToContact = () => {
@@ -35,7 +34,7 @@ const HeroSection = () => {
         {/* Profile Image */}
         <div className="flex justify-center lg:w-1/2">
           <img 
-            src={userProfileImage} 
+            src="/lovable-uploads/ae4433c6-0075-40ab-9f71-f662228b2478.png" 
             alt="Gabriel Wambua - Software Developer" 
             className="rounded-lg shadow-card-hover w-48 sm:w-60 lg:w-80 h-auto transition-transform duration-300 hover:scale-105"
           />
