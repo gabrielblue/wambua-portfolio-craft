@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import userProfileImage from "@/assets/user-profile.jpg";
+import logoImage from "@/assets/logo.png";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -17,127 +28,104 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="w-full bg-blue-light py-3 shadow-lg fixed top-0 z-50">
+    <nav className={`w-full py-3 shadow-lg fixed top-0 z-50 transition-all duration-500 ease-in-out transform ${
+      isScrolled 
+        ? 'bg-blue-light/95 backdrop-blur-md py-2 shadow-xl border-b border-gray-light/20' 
+        : 'bg-blue-light py-3'
+    }`}>
       <div className="container mx-auto flex items-center justify-between px-4 sm:px-6">
-        {/* Brand and Name */}
-        <div className="flex items-center gap-2">
-          <span className="text-lg sm:text-xl font-bold text-foreground">Gabriel Wambua.</span>
+        {/* Logo and Brand */}
+        <div className="flex items-center gap-3 group cursor-pointer" onClick={() => scrollToSection('home')}>
+          <div className="relative overflow-hidden rounded-lg">
+            <img 
+              className={`transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:rotate-6 ${
+                isScrolled ? 'w-6 h-6' : 'w-8 h-8'
+              }`} 
+              src={logoImage} 
+              alt="Portfolio Logo" 
+            />
+            <div className="absolute inset-0 bg-gradient-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+          </div>
+          <span className={`font-bold text-foreground transition-all duration-300 group-hover:text-primary group-hover:scale-105 ${
+            isScrolled ? 'text-lg' : 'text-lg sm:text-xl'
+          }`}>
+            Gabriel Wambua.
+          </span>
         </div>
         
         {/* Navigation Links - Desktop */}
-        <ul className="hidden md:flex space-x-6 text-gray-text font-semibold uppercase text-sm">
-          <li>
-            <button 
-              onClick={() => scrollToSection('home')} 
-              className="hover:text-foreground transition-colors"
-            >
-              Homepage
-            </button>
-          </li>
-          <li>
-            <button 
-              onClick={() => scrollToSection('about')} 
-              className="hover:text-foreground transition-colors"
-            >
-              About Me
-            </button>
-          </li>
-          <li>
-            <button 
-              onClick={() => scrollToSection('services')} 
-              className="hover:text-foreground transition-colors"
-            >
-              Services
-            </button>
-          </li>
-          <li>
-            <button 
-              onClick={() => scrollToSection('works')} 
-              className="hover:text-foreground transition-colors"
-            >
-              Works
-            </button>
-          </li>
-          <li>
-            <button 
-              onClick={() => scrollToSection('contact')} 
-              className="hover:text-foreground transition-colors"
-            >
-              Contact
-            </button>
-          </li>
+        <ul className="hidden md:flex space-x-8 text-gray-text font-semibold uppercase text-sm">
+          {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
+            <li key={section} className="relative group">
+              <button 
+                onClick={() => scrollToSection(section)} 
+                className="relative py-2 px-1 hover:text-foreground transition-all duration-300 hover:scale-105 transform"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {section === 'home' ? 'Homepage' : section === 'about' ? 'About Me' : section.charAt(0).toUpperCase() + section.slice(1)}
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                <span className="absolute inset-0 bg-gradient-blue/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
+              </button>
+            </li>
+          ))}
         </ul>
 
         {/* Profile Picture */}
         <div className="hidden md:block">
-          <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-            <AvatarImage src={userProfileImage} alt="Gabriel Wambua" />
-            <AvatarFallback>GW</AvatarFallback>
-          </Avatar>
+          <div className="relative group">
+            <Avatar className={`transition-all duration-500 hover:scale-110 hover:shadow-lg ring-2 ring-transparent hover:ring-primary/30 ${
+              isScrolled ? 'h-8 w-8' : 'h-8 w-8 sm:h-10 sm:w-10'
+            }`}>
+              <AvatarImage src={userProfileImage} alt="Gabriel Wambua" className="group-hover:brightness-110 transition-all duration-300" />
+              <AvatarFallback className="bg-gradient-blue text-white font-bold group-hover:scale-105 transition-transform duration-300">GW</AvatarFallback>
+            </Avatar>
+            <div className="absolute -inset-2 bg-gradient-blue/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300 -z-10"></div>
+          </div>
         </div>
 
         {/* Hamburger Menu - Mobile */}
         <div className="md:hidden">
           <button 
             onClick={toggleMenu}
-            className="text-foreground hover:text-gray-text transition-colors"
+            className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 transform hover:rotate-12 group"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <div className="absolute inset-0 bg-gradient-blue/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {isMenuOpen ? 
+              <X size={24} className="transform rotate-180 transition-transform duration-300" /> : 
+              <Menu size={24} className="group-hover:scale-110 transition-transform duration-300" />
+            }
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-blue-light border-t border-gray-light">
+        <div className="md:hidden bg-blue-light/95 backdrop-blur-md border-t border-gray-light/20 animate-fade-in">
           {/* Profile Picture in Mobile Menu */}
-          <div className="flex justify-center py-3 border-b border-gray-light">
-            <Avatar className="h-12 w-12">
-              <AvatarImage src={userProfileImage} alt="Gabriel Wambua" />
-              <AvatarFallback>GW</AvatarFallback>
-            </Avatar>
+          <div className="flex justify-center py-4 border-b border-gray-light/20">
+            <div className="relative group">
+              <Avatar className="h-14 w-14 ring-2 ring-primary/30 hover:ring-primary/50 transition-all duration-300 hover:scale-105">
+                <AvatarImage src={userProfileImage} alt="Gabriel Wambua" className="group-hover:brightness-110 transition-all duration-300" />
+                <AvatarFallback className="bg-gradient-blue text-white font-bold">GW</AvatarFallback>
+              </Avatar>
+              <div className="absolute -inset-2 bg-gradient-blue/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300 -z-10"></div>
+            </div>
           </div>
-          <ul className="flex flex-col py-4 px-6 space-y-3">
-            <li>
-              <button 
-                onClick={() => scrollToSection('home')} 
-                className="block text-gray-text hover:text-foreground font-semibold uppercase text-sm transition-colors"
-              >
-                Homepage
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => scrollToSection('about')} 
-                className="block text-gray-text hover:text-foreground font-semibold uppercase text-sm transition-colors"
-              >
-                About Me
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => scrollToSection('services')} 
-                className="block text-gray-text hover:text-foreground font-semibold uppercase text-sm transition-colors"
-              >
-                Services
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => scrollToSection('works')} 
-                className="block text-gray-text hover:text-foreground font-semibold uppercase text-sm transition-colors"
-              >
-                Works
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="block text-gray-text hover:text-foreground font-semibold uppercase text-sm transition-colors"
-              >
-                Contact
-              </button>
-            </li>
+          <ul className="flex flex-col py-4 px-6 space-y-2">
+            {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
+              <li key={section} className="transform translate-x-4 opacity-0 animate-fade-in" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}>
+                <button 
+                  onClick={() => scrollToSection(section)} 
+                  className="relative w-full text-left py-3 px-4 text-gray-text hover:text-foreground font-semibold uppercase text-sm transition-all duration-300 hover:scale-105 transform rounded-lg group"
+                >
+                  <span className="relative z-10">
+                    {section === 'home' ? 'Homepage' : section === 'about' ? 'About Me' : section.charAt(0).toUpperCase() + section.slice(1)}
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-blue/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-0 bg-gradient-blue group-hover:h-8 transition-all duration-300 rounded-r-full"></span>
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       )}
