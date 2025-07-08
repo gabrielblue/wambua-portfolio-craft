@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import userProfileImage from "@/assets/user-profile.jpg";
 import logoImage from "@/assets/logo.png";
 
 const Navigation = () => {
@@ -70,18 +68,6 @@ const Navigation = () => {
           ))}
         </ul>
 
-        {/* Profile Picture */}
-        <div className="hidden md:block">
-          <div className="relative group">
-            <Avatar className={`transition-all duration-500 hover:scale-110 hover:shadow-lg ring-2 ring-transparent hover:ring-primary/30 ${
-              isScrolled ? 'h-8 w-8' : 'h-8 w-8 sm:h-10 sm:w-10'
-            }`}>
-              <AvatarImage src={userProfileImage} alt="Gabriel Wambua" className="group-hover:brightness-110 transition-all duration-300" />
-              <AvatarFallback className="bg-gradient-blue text-white font-bold group-hover:scale-105 transition-transform duration-300">GW</AvatarFallback>
-            </Avatar>
-            <div className="absolute -inset-2 bg-gradient-blue/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300 -z-10"></div>
-          </div>
-        </div>
 
         {/* Hamburger Menu - Mobile */}
         <div className="md:hidden">
@@ -101,16 +87,6 @@ const Navigation = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-blue-light/95 backdrop-blur-md border-t border-gray-light/20 animate-fade-in">
-          {/* Profile Picture in Mobile Menu */}
-          <div className="flex justify-center py-4 border-b border-gray-light/20">
-            <div className="relative group">
-              <Avatar className="h-14 w-14 ring-2 ring-primary/30 hover:ring-primary/50 transition-all duration-300 hover:scale-105">
-                <AvatarImage src={userProfileImage} alt="Gabriel Wambua" className="group-hover:brightness-110 transition-all duration-300" />
-                <AvatarFallback className="bg-gradient-blue text-white font-bold">GW</AvatarFallback>
-              </Avatar>
-              <div className="absolute -inset-2 bg-gradient-blue/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300 -z-10"></div>
-            </div>
-          </div>
           <ul className="flex flex-col py-4 px-6 space-y-2">
             {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
               <li key={section} className="transform translate-x-4 opacity-0 animate-fade-in" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}>
