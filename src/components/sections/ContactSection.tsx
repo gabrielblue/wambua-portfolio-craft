@@ -137,8 +137,14 @@ const ContactSection = () => {
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
                 <strong className="text-foreground">LinkedIn:</strong> 
-                <a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" className="hover:text-blue-primary transition duration-300">
-                  LinkedIn Profile
+                <a href="https://www.linkedin.com/in/angel-gabriel-129b08339/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-primary transition duration-300">
+                  angel-gabriel-129b08339
+                </a>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                <strong className="text-foreground">GitHub:</strong> 
+                <a href="https://github.com/gabrielblue/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-primary transition duration-300">
+                  gabrielblue
                 </a>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
