@@ -26,7 +26,7 @@ const HeroSection = () => {
           <div className="bg-card p-4 sm:p-6 mt-6 rounded-md shadow-card max-w-lg mx-auto lg:mx-0 transform transition-all duration-500 hover:scale-105 hover:shadow-card-hover group">
             <h2 className="text-2xl sm:text-3xl font-semibold text-card-foreground mb-4 group-hover:text-primary transition-colors duration-300">I'm Gabriel Wambua</h2>
             <p className="text-gray-text mb-6 text-sm sm:text-base leading-relaxed group-hover:text-foreground transition-colors duration-300">
-              With a certificate of experience in web design and development. Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam quo provident, facere minus temporibus veniam nostrum reprehenderit nihil?
+              I'm a passionate full-stack developer with expertise in modern web technologies including React, Node.js, and mobile app development. I specialize in creating innovative, user-friendly applications that solve real-world problems. From responsive websites to complex web applications, I bring ideas to life through clean, efficient code and thoughtful design.
             </p>
             <Button 
               onClick={scrollToContact}
