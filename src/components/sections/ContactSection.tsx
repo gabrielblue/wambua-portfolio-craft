@@ -1,54 +1,21 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { ContactForm } from "@/components/chat/ContactForm";
+import { ChatInterface } from "@/components/chat/ChatInterface";
 
 const ContactSection = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    message: ""
-  });
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [visitorName, setVisitorName] = useState('');
+  const [visitorEmail, setVisitorEmail] = useState('');
+  const [conversationId, setConversationId] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleStartChat = (name: string, email: string) => {
+    setVisitorName(name);
+    setVisitorEmail(email);
+    setIsChatOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: "Required fields missing",
-        description: "Please fill in your name, email, and message.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Simulate form submission
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    });
-
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      message: ""
-    });
+  const handleConversationStart = (id: string) => {
+    setConversationId(id);
   };
 
   return (
@@ -66,58 +33,8 @@ const ContactSection = () => {
         
         {/* Contact Form and Info */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start justify-center">
-          {/* Contact Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full lg:w-1/2 bg-background/90 p-6 sm:p-8 rounded-lg shadow-card hover:shadow-card-hover transition-all duration-300 backdrop-blur-sm">
-            <Input 
-              type="text" 
-              name="name"
-              placeholder="Name" 
-              value={formData.name}
-              onChange={handleInputChange}
-              className="shadow-sm hover:shadow-md transition-shadow duration-300" 
-              required 
-            />
-            <Input 
-              type="email" 
-              name="email"
-              placeholder="Email" 
-              value={formData.email}
-              onChange={handleInputChange}
-              className="shadow-sm hover:shadow-md transition-shadow duration-300" 
-              required 
-            />
-            <Input 
-              type="tel" 
-              name="phone"
-              placeholder="Phone Number" 
-              value={formData.phone}
-              onChange={handleInputChange}
-              className="shadow-sm hover:shadow-md transition-shadow duration-300" 
-            />
-            <Input 
-              type="text" 
-              name="company"
-              placeholder="Company/Organization" 
-              value={formData.company}
-              onChange={handleInputChange}
-              className="shadow-sm hover:shadow-md transition-shadow duration-300" 
-            />
-            <Textarea 
-              name="message"
-              placeholder="Message..." 
-              value={formData.message}
-              onChange={handleInputChange}
-              className="shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[120px]" 
-              required 
-            />
-            
-            <Button 
-              type="submit"
-              className="w-full transform transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              Submit
-            </Button>
-          </form>
+          {/* Chat Contact Form */}
+          <ContactForm onStartChat={handleStartChat} />
 
           {/* Contact Information */}
           <div className="bg-background/90 p-6 sm:p-8 rounded-lg shadow-card hover:shadow-card-hover transition-all duration-300 backdrop-blur-sm w-full lg:w-1/3 flex flex-col gap-4 text-gray-text">
@@ -156,6 +73,16 @@ const ContactSection = () => {
             </div>
           </div>
         </div>
+
+        {/* Chat Interface */}
+        <ChatInterface
+          isOpen={isChatOpen}
+          onClose={() => setIsChatOpen(false)}
+          visitorName={visitorName}
+          visitorEmail={visitorEmail}
+          conversationId={conversationId}
+          onConversationStart={handleConversationStart}
+        />
       </div>
     </div>
   );
