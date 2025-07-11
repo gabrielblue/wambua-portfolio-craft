@@ -2,7 +2,18 @@ import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Send, X, MessageCircle } from 'lucide-react'
-import { supabase, Message } from '@/lib/supabase'
+import { supabase } from '@/integrations/supabase/client'
+
+// Database types
+interface Message {
+  id: string
+  conversation_id: string
+  sender_name: string
+  sender_email: string
+  content: string
+  created_at: string
+  is_admin_reply: boolean
+}
 import { useToast } from '@/hooks/use-toast'
 
 interface ChatInterfaceProps {
