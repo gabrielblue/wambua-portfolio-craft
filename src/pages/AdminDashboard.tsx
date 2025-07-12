@@ -182,6 +182,52 @@ export default function AdminDashboard() {
     })
   }
 
+  const deleteConversation = async (conversationId: string) => {
+    // First delete all messages in the conversation
+    const { error: messagesError } = await supabase
+      .from('messages')
+      .delete()
+      .eq('conversation_id', conversationId)
+
+    if (messagesError) {
+      toast({
+        title: 'Error',
+        description: 'Failed to delete conversation messages',
+        variant: 'destructive'
+      })
+      return
+    }
+
+    // Then delete the conversation
+    const { error: conversationError } = await supabase
+      .from('conversations')
+      .delete()
+      .eq('id', conversationId)
+
+    if (conversationError) {
+      toast({
+        title: 'Error',
+        description: 'Failed to delete conversation',
+        variant: 'destructive'
+      })
+      return
+    }
+
+    // Update local state
+    setConversations(prev => prev.filter(conv => conv.id !== conversationId))
+    
+    // Clear selected conversation if it was the one deleted
+    if (selectedConversation?.id === conversationId) {
+      setSelectedConversation(null)
+      setMessages([])
+    }
+    
+    toast({
+      title: 'Success',
+      description: 'Conversation deleted successfully',
+    })
+  }
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -230,9 +276,22 @@ export default function AdminDashboard() {
                           </span>
                         </div>
                       </div>
-                      <Badge variant={conversation.status === 'active' ? 'default' : 'secondary'}>
-                        {conversation.status}
-                      </Badge>
+                      <div className="flex items-center gap-2">
+                        <Badge variant={conversation.status === 'active' ? 'default' : 'secondary'}>
+                          {conversation.status}
+                        </Badge>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            deleteConversation(conversation.id)
+                          }}
+                          className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
