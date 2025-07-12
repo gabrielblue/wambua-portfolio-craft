@@ -169,10 +169,10 @@ export const ChatInterface = ({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-end p-4">
-      <div className="bg-background rounded-lg shadow-xl w-full max-w-md h-96 flex flex-col">
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-end p-4 sm:p-6">
+      <div className="bg-background rounded-lg shadow-xl w-full max-w-md h-[80vh] sm:h-96 flex flex-col max-h-[600px]">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between p-4 border-b flex-shrink-0">
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5 text-primary" />
             <h3 className="font-semibold">Chat with Gabriel</h3>
@@ -183,7 +183,7 @@ export const ChatInterface = ({
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
           {!conversationId ? (
             <div className="text-center space-y-4">
               <p className="text-muted-foreground">
@@ -221,7 +221,7 @@ export const ChatInterface = ({
 
         {/* Input */}
         {conversationId && (
-          <div className="p-4 border-t">
+          <div className="p-4 border-t flex-shrink-0">
             <div className="flex gap-2">
               <Input
                 value={newMessage}
@@ -229,8 +229,9 @@ export const ChatInterface = ({
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
                 disabled={isLoading}
+                className="flex-1"
               />
-              <Button onClick={sendMessage} disabled={isLoading || !newMessage.trim()}>
+              <Button onClick={sendMessage} disabled={isLoading || !newMessage.trim()} size="sm">
                 <Send className="h-4 w-4" />
               </Button>
             </div>

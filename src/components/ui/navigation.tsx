@@ -85,26 +85,28 @@ const Navigation = () => {
       </div>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-blue-light/95 backdrop-blur-md border-t border-gray-light/20 animate-fade-in">
-          <ul className="flex flex-col py-4 px-6 space-y-2">
-            {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
-              <li key={section} className="transform translate-x-4 opacity-0 animate-fade-in" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}>
-                <button 
-                  onClick={() => scrollToSection(section)} 
-                  className="relative w-full text-left py-3 px-4 text-gray-text hover:text-foreground font-semibold uppercase text-sm transition-all duration-300 hover:scale-105 transform rounded-lg group"
-                >
-                  <span className="relative z-10">
-                    {section === 'home' ? 'Homepage' : section === 'about' ? 'About Me' : section.charAt(0).toUpperCase() + section.slice(1)}
-                  </span>
-                  <span className="absolute inset-0 bg-gradient-blue/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-0 bg-gradient-blue group-hover:h-8 transition-all duration-300 rounded-r-full"></span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div className={`md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-t border-border/20 transition-all duration-300 ease-in-out transform ${
+        isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+      }`}>
+        <ul className="flex flex-col py-4 px-6 space-y-2">
+          {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
+            <li key={section} className={`transition-all duration-300 transform ${
+              isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+            }`} style={{ transitionDelay: `${index * 50}ms` }}>
+              <button 
+                onClick={() => scrollToSection(section)} 
+                className="relative w-full text-left py-3 px-4 text-muted-foreground hover:text-foreground font-semibold uppercase text-sm transition-all duration-300 hover:scale-105 transform rounded-lg group"
+              >
+                <span className="relative z-10">
+                  {section === 'home' ? 'Homepage' : section === 'about' ? 'About Me' : section.charAt(0).toUpperCase() + section.slice(1)}
+                </span>
+                <span className="absolute inset-0 bg-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-0 bg-primary group-hover:h-8 transition-all duration-300 rounded-r-full"></span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };
