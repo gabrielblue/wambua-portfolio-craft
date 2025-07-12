@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import logoImage from "@/assets/logo.png";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,25 +53,29 @@ const Navigation = () => {
         </div>
         
         {/* Navigation Links - Desktop */}
-        <ul className="hidden md:flex space-x-8 text-gray-text font-semibold uppercase text-sm">
-          {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
-            <li key={section} className="relative group">
-              <button 
-                onClick={() => scrollToSection(section)} 
-                className="relative py-2 px-1 hover:text-foreground transition-all duration-300 hover:scale-105 transform"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {section === 'home' ? 'Homepage' : section === 'about' ? 'About Me' : section.charAt(0).toUpperCase() + section.slice(1)}
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-                <span className="absolute inset-0 bg-gradient-blue/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex items-center space-x-8">
+          <ul className="flex space-x-8 text-gray-text font-semibold uppercase text-sm">
+            {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
+              <li key={section} className="relative group">
+                <button 
+                  onClick={() => scrollToSection(section)} 
+                  className="relative py-2 px-1 hover:text-foreground transition-all duration-300 hover:scale-105 transform"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {section === 'home' ? 'Homepage' : section === 'about' ? 'About Me' : section.charAt(0).toUpperCase() + section.slice(1)}
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute inset-0 bg-gradient-blue/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          <ThemeToggle />
+        </div>
 
 
-        {/* Hamburger Menu - Mobile */}
-        <div className="md:hidden">
+        {/* Mobile Actions */}
+        <div className="md:hidden flex items-center space-x-2">
+          <ThemeToggle />
           <button 
             onClick={toggleMenu}
             className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 transform hover:rotate-12 group"
