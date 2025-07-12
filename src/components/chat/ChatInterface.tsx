@@ -100,6 +100,32 @@ export const ChatInterface = ({
   const startConversation = async () => {
     setIsLoading(true)
     
+    // First, check if a conversation already exists for this email
+    const { data: existingConversation, error: fetchError } = await supabase
+      .from('conversations')
+      .select('*')
+      .eq('visitor_email', visitorEmail)
+      .eq('status', 'active')
+      .single()
+
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      toast({
+        title: 'Error',
+        description: 'Failed to check existing conversations',
+        variant: 'destructive'
+      })
+      setIsLoading(false)
+      return
+    }
+
+    if (existingConversation) {
+      // Use existing conversation
+      onConversationStart(existingConversation.id)
+      setIsLoading(false)
+      return
+    }
+
+    // Create new conversation if none exists
     const { data, error } = await supabase
       .from('conversations')
       .insert({

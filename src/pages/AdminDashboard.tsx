@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { MessageCircle, Send, User, Clock } from 'lucide-react'
+import { MessageCircle, Send, User, Clock, Trash2 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 
 interface Conversation {
@@ -158,6 +158,30 @@ export default function AdminDashboard() {
     setIsLoading(false)
   }
 
+  const deleteMessage = async (messageId: string) => {
+    const { error } = await supabase
+      .from('messages')
+      .delete()
+      .eq('id', messageId)
+
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to delete message',
+        variant: 'destructive'
+      })
+      return
+    }
+
+    // Remove message from local state
+    setMessages(prev => prev.filter(msg => msg.id !== messageId))
+    
+    toast({
+      title: 'Success',
+      description: 'Message deleted successfully',
+    })
+  }
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -235,19 +259,29 @@ export default function AdminDashboard() {
                     {messages.map((message) => (
                       <div
                         key={message.id}
-                        className={`flex ${message.is_admin_reply ? 'justify-end' : 'justify-start'}`}
+                        className={`flex ${message.is_admin_reply ? 'justify-end' : 'justify-start'} group`}
                       >
-                        <div
-                          className={`max-w-xs lg:max-w-md px-3 py-2 rounded-lg ${
-                            message.is_admin_reply
-                              ? 'bg-primary text-primary-foreground'
-                              : 'bg-muted text-foreground'
-                          }`}
-                        >
-                          <p className="text-sm">{message.content}</p>
-                          <p className="text-xs opacity-70 mt-1">
-                            {new Date(message.created_at).toLocaleTimeString()}
-                          </p>
+                        <div className="flex items-start gap-2 max-w-xs lg:max-w-md">
+                          <div
+                            className={`px-3 py-2 rounded-lg ${
+                              message.is_admin_reply
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-muted text-foreground'
+                            }`}
+                          >
+                            <p className="text-sm">{message.content}</p>
+                            <p className="text-xs opacity-70 mt-1">
+                              {new Date(message.created_at).toLocaleTimeString()}
+                            </p>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteMessage(message.id)}
+                            className="opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6 p-0 text-destructive hover:text-destructive"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
                         </div>
                       </div>
                     ))}
