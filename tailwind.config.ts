@@ -66,18 +66,25 @@ export default {
 				'blue-light': 'hsl(var(--blue-light))',
 				'blue-primary': 'hsl(var(--blue-primary))',
 				'gray-text': 'hsl(var(--gray-text))',
-				'gray-light': 'hsl(var(--gray-light))'
+				'gray-light': 'hsl(var(--gray-light))',
+				// AI/Tech colors
+				'tech-cyan': 'hsl(var(--tech-cyan))',
+				'tech-purple': 'hsl(var(--tech-purple))',
+				'tech-green': 'hsl(var(--tech-green))',
+				'tech-orange': 'hsl(var(--tech-orange))'
 			},
 			backgroundImage: {
 				'gradient-purple': 'var(--gradient-purple)',
 				'gradient-blue': 'var(--gradient-blue)',
 				'gradient-green': 'var(--gradient-green)',
 				'gradient-pink': 'var(--gradient-pink)',
-				'gradient-orange': 'var(--gradient-orange)'
+				'gradient-orange': 'var(--gradient-orange)',
+				'gradient-primary': 'var(--gradient-primary)'
 			},
 			boxShadow: {
 				'card': 'var(--shadow-card)',
-				'card-hover': 'var(--shadow-hover)'
+				'card-hover': 'var(--shadow-hover)',
+				'glow': 'var(--shadow-glow)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
