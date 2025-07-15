@@ -79,6 +79,90 @@ export type Database = {
           },
         ]
       }
+      services: {
+        Row: {
+          created_at: string | null
+          description: string
+          gradient: string
+          icon: string
+          id: string
+          is_active: boolean
+          name: string
+          order_index: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          gradient?: string
+          icon?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          order_index?: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          gradient?: string
+          icon?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          order_index?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      works: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string
+          github_url: string | null
+          id: string
+          image_url: string
+          is_active: boolean
+          is_featured: boolean
+          live_url: string | null
+          order_index: number
+          tech_stack: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string
+          created_at?: string | null
+          description: string
+          github_url?: string | null
+          id?: string
+          image_url: string
+          is_active?: boolean
+          is_featured?: boolean
+          live_url?: string | null
+          order_index?: number
+          tech_stack: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string
+          github_url?: string | null
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          is_featured?: boolean
+          live_url?: string | null
+          order_index?: number
+          tech_stack?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
