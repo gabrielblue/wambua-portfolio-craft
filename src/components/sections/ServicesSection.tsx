@@ -164,7 +164,7 @@ const ServicesSection = () => {
                 <h3 className="text-lg font-medium hover:text-blue-primary transition-colors text-card-foreground mb-3">
                   {service.name}
                 </h3>
-                <p className="text-gray-text text-sm sm:text-base leading-relaxed">
+                <p className="text-gray-text text-sm sm:text-base leading-relaxed line-clamp-4">
                   {service.description}
                 </p>
               </div>

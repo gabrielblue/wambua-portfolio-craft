@@ -25,7 +25,7 @@ const Portfolio3DViewer = () => {
       id: '1',
       title: 'Alumni Android App',
       description: 'A comprehensive mobile application built with Kotlin for alumni networking, featuring real-time messaging, event management, and professional networking capabilities.',
-      image: '/src/assets/alumni-android-mockup.jpg',
+      image: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=800',
       technologies: ['Kotlin', 'Android', 'Firebase', 'Material Design'],
       githubUrl: 'https://github.com/gabrielblue/alumniandroid',
       category: 'Mobile Development'
@@ -34,7 +34,7 @@ const Portfolio3DViewer = () => {
       id: '2',
       title: 'Laravel Web Platform',
       description: 'Full-stack web application built with Laravel and PHP, featuring user authentication, admin dashboard, and responsive design with Bootstrap.',
-      image: '/src/assets/laravel-project-mockup.jpg',
+      image: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800',
       technologies: ['PHP', 'Laravel', 'MySQL', 'Bootstrap'],
       githubUrl: 'https://github.com/gabrielblue/Laravel-project',
       category: 'Web Development'
@@ -43,7 +43,7 @@ const Portfolio3DViewer = () => {
       id: '3',
       title: 'Node.js API Server',
       description: 'Robust backend API built with Node.js and Express, featuring user registration, authentication, and RESTful endpoints for modern web applications.',
-      image: '/src/assets/nodejs-project-mockup.jpg',
+      image: 'https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=800',
       technologies: ['Node.js', 'Express', 'MongoDB', 'JWT'],
       githubUrl: 'https://github.com/gabrielblue/Nodejs-',
       category: 'Backend Development'
@@ -52,7 +52,7 @@ const Portfolio3DViewer = () => {
       id: '4',
       title: 'Frontend Assignment',
       description: 'Responsive web development project showcasing modern HTML5 and CSS3 techniques, with focus on accessibility and cross-browser compatibility.',
-      image: '/src/assets/assignment-project-mockup.jpg',
+      image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800',
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
       githubUrl: 'https://github.com/gabrielblue/assingment',
       category: 'Frontend Development'
@@ -129,6 +129,10 @@ const Portfolio3DViewer = () => {
                     src={currentProject.image}
                     alt={currentProject.title}
                     className="w-full h-80 object-cover rounded-xl shadow-2xl border border-border/20"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800';
+                    }}
                   />
                   
                   {/* Overlay with project info */}
@@ -243,6 +247,10 @@ const Portfolio3DViewer = () => {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800';
+                  }}
                 />
               </button>
             ))}

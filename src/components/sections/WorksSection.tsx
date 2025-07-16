@@ -50,7 +50,7 @@ const WorksSection = () => {
           id: '1',
           title: "Alumni Android App",
           description: "Mobile application built with Kotlin for alumni networking and communication",
-          image_url: "/src/assets/alumni-android-mockup.jpg",
+          image_url: "https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=800",
           tech_stack: "Kotlin",
           github_url: "https://github.com/gabrielblue/alumniandroid",
           category: "Mobile Development",
@@ -62,7 +62,7 @@ const WorksSection = () => {
           id: '2',
           title: "Laravel Web Application",
           description: "Full-stack web platform built with Laravel, PHP and Bootstrap",
-          image_url: "/src/assets/laravel-project-mockup.jpg",
+          image_url: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800",
           tech_stack: "PHP, Laravel",
           github_url: "https://github.com/gabrielblue/Laravel-project",
           category: "Web Development",
@@ -74,7 +74,7 @@ const WorksSection = () => {
           id: '3',
           title: "Node.js Backend API",
           description: "Server-side application with Express.js and registration system",
-          image_url: "/src/assets/nodejs-project-mockup.jpg",
+          image_url: "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=800",
           tech_stack: "Node.js, JavaScript",
           github_url: "https://github.com/gabrielblue/Nodejs-",
           category: "Backend Development",
@@ -86,7 +86,7 @@ const WorksSection = () => {
           id: '4',
           title: "Frontend Assignment",
           description: "Responsive web development project showcasing HTML, CSS skills",
-          image_url: "/src/assets/assignment-project-mockup.jpg",
+          image_url: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
           tech_stack: "HTML, CSS",
           github_url: "https://github.com/gabrielblue/assingment",
           category: "Frontend Development",
@@ -149,6 +149,10 @@ const WorksSection = () => {
                   src={work.image_url} 
                   alt={work.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800';
+                  }}
                 />
                 <div className="absolute top-2 right-2 bg-blue-primary text-white px-2 py-1 rounded-md text-xs font-medium">
                   {work.tech_stack}

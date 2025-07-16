@@ -263,11 +263,15 @@ export const WorkManager = () => {
                 <div>
                   <label className="block text-sm font-medium mb-2">Image URL</label>
                   <Input
+                    type="url"
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
+                    placeholder="https://images.pexels.com/photos/example.jpeg"
                     required
                   />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Use Pexels URLs for best performance: https://images.pexels.com/photos/...
+                  </p>
                 </div>
 
                 <div>
@@ -354,6 +358,10 @@ export const WorkManager = () => {
                   src={work.image_url} 
                   alt={work.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800';
+                  }}
                 />
                 {work.is_featured && (
                   <Badge className="absolute top-2 left-2 bg-yellow-500">

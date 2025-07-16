@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import logoImage from "@/assets/logo.png";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const Navigation = () => {
@@ -36,13 +35,13 @@ const Navigation = () => {
         {/* Logo and Brand */}
         <div className="flex items-center gap-3 group cursor-pointer" onClick={() => scrollToSection('home')}>
           <div className="relative overflow-hidden rounded-lg">
-            <img 
+            <div 
               className={`transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:rotate-6 ${
                 isScrolled ? 'w-6 h-6' : 'w-8 h-8'
-              }`} 
-              src={logoImage} 
-              alt="Portfolio Logo" 
-            />
+              } bg-gradient-blue rounded-lg flex items-center justify-center text-white font-bold text-sm`}
+            >
+              GW
+            </div>
             <div className="absolute inset-0 bg-gradient-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
           </div>
           <span className={`font-bold text-foreground transition-all duration-300 group-hover:text-primary group-hover:scale-105 ${
