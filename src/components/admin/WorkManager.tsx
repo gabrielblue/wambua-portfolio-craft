@@ -266,11 +266,11 @@ export const WorkManager = () => {
                     type="url"
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    placeholder="https://images.pexels.com/photos/example.jpeg"
+                    placeholder="https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg"
                     required
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    Use Pexels URLs for best performance: https://images.pexels.com/photos/...
+                    Use realistic project mockup images that represent your actual applications
                   </p>
                 </div>
 
