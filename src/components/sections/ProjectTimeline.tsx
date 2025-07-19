@@ -12,7 +12,6 @@ interface TimelineEvent {
 
 const ProjectTimeline = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [hasStartedAnimation, setHasStartedAnimation] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -86,37 +85,16 @@ const ProjectTimeline = () => {
 
       // Start animation when section enters viewport
       const startOffset = viewportHeight * 0.8;
-      const endOffset = viewportHeight * 0.2;
 
-      if (containerRect.top <= startOffset && containerRect.bottom >= endOffset) {
+      if (containerRect.top <= startOffset && containerRect.bottom >= 0) {
         if (!hasStartedAnimation) {
           setHasStartedAnimation(true);
-        }
-
-        // Calculate progress through the timeline section
-        const sectionHeight = container.offsetHeight;
-        const scrollableHeight = sectionHeight - viewportHeight;
-        const scrolled = Math.max(0, startOffset - containerRect.top);
-        const progress = Math.min(1, scrolled / scrollableHeight);
-        
-        setScrollProgress(progress);
-
-        // Calculate which item should be displayed based on scroll progress
-        const itemProgress = progress * timelineEvents.length;
-        const newIndex = Math.min(Math.floor(itemProgress), timelineEvents.length - 1);
-        
-        if (newIndex !== currentIndex) {
-          setCurrentIndex(newIndex);
-        }
-
-        // Check if animation is complete
-        if (progress >= 0.95 && newIndex >= timelineEvents.length - 1) {
-          setIsAnimationComplete(true);
+          // Start the timeline progression
+          startTimelineProgression();
         }
       } else if (containerRect.top > startOffset) {
         // Reset when scrolling back up
         setHasStartedAnimation(false);
-        setScrollProgress(0);
         setCurrentIndex(0);
         setIsAnimationComplete(false);
       }
@@ -127,8 +105,8 @@ const ProjectTimeline = () => {
       if (!containerRef.current) return;
       
       const containerRect = containerRef.current.getBoundingClientRect();
-      const isInTimelineSection = containerRect.top <= window.innerHeight * 0.8 && 
-                                 containerRect.bottom >= window.innerHeight * 0.2;
+      const isInTimelineSection = containerRect.top <= window.innerHeight * 0.2 && 
+                                 containerRect.bottom >= window.innerHeight * 0.8;
       
       if (isInTimelineSection && !isAnimationComplete && e.deltaY > 0) {
         e.preventDefault();
@@ -143,7 +121,23 @@ const ProjectTimeline = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', preventScroll);
     };
-  }, [currentIndex, hasStartedAnimation, isAnimationComplete, timelineEvents.length]);
+  }, [hasStartedAnimation, isAnimationComplete]);
+
+  const startTimelineProgression = () => {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < timelineEvents.length - 1) {
+        index++;
+        setCurrentIndex(index);
+      } else {
+        clearInterval(interval);
+        // Add a small delay before allowing scroll
+        setTimeout(() => {
+          setIsAnimationComplete(true);
+        }, 1000);
+      }
+    }, 2000); // 2 seconds per slide
+  };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -180,7 +174,7 @@ const ProjectTimeline = () => {
     <div 
       id="timeline" 
       ref={containerRef}
-      className="min-h-[400vh] bg-background relative overflow-hidden"
+      className="h-screen bg-background relative overflow-hidden flex flex-col"
     >
       {/* Animated background */}
       <div className="absolute inset-0 -z-10">
@@ -188,8 +182,8 @@ const ProjectTimeline = () => {
         <div className="absolute bottom-20 right-10 w-48 h-48 bg-gradient-to-r from-green-500/5 to-cyan-500/5 rounded-full animate-bounce" style={{ animationDuration: '4s' }}></div>
       </div>
 
-      {/* Fixed header section */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20 py-8">
+      {/* Header section */}
+      <div className="flex-shrink-0 pt-16 pb-8">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-4xl font-bold text-foreground mb-4">
             Project Timeline
@@ -219,7 +213,7 @@ const ProjectTimeline = () => {
               isAnimationComplete ? (
                 <span className="text-green-500 font-medium">✓ Timeline Complete - Continue Scrolling</span>
               ) : (
-                <span className="animate-pulse">Scroll to reveal timeline...</span>
+                <span className="animate-pulse">Timeline in progress...</span>
               )
             ) : (
               <span>Scroll down to start the timeline</span>
@@ -228,8 +222,8 @@ const ProjectTimeline = () => {
         </div>
       </div>
 
-      {/* Main timeline content - sticky positioned */}
-      <div className="sticky top-32 h-[calc(100vh-8rem)] flex items-center justify-center px-4 sm:px-6">
+      {/* Main timeline content - centered */}
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6">
         <div className="w-full max-w-4xl">
           {hasStartedAnimation && (
             <div 
@@ -240,7 +234,7 @@ const ProjectTimeline = () => {
               }}
             >
               {/* Timeline card */}
-              <div className="bg-card/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-border/50 hover:border-primary/30 transition-all duration-300 mx-auto max-w-3xl">
+              <div className="bg-card/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl border border-border/50 hover:border-primary/30 transition-all duration-300 mx-auto max-w-3xl">
                 <div className="flex flex-col lg:flex-row items-start gap-6">
                   {/* Timeline dot */}
                   <div className="flex-shrink-0 relative mx-auto lg:mx-0">
@@ -290,7 +284,7 @@ const ProjectTimeline = () => {
       </div>
 
       {/* Item counter - fixed position */}
-      <div className="fixed bottom-8 right-8 bg-background/90 backdrop-blur-sm rounded-full px-4 py-2 border border-border/50 z-50 shadow-lg">
+      <div className="absolute bottom-8 right-8 bg-background/90 backdrop-blur-sm rounded-full px-4 py-2 border border-border/50 shadow-lg">
         <span className="text-sm font-medium">
           {currentIndex + 1} / {timelineEvents.length}
         </span>
@@ -298,9 +292,9 @@ const ProjectTimeline = () => {
 
       {/* Mobile scroll hint */}
       {hasStartedAnimation && !isAnimationComplete && (
-        <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-40 lg:hidden">
-          <div className="bg-primary/90 text-primary-foreground px-4 py-2 rounded-full text-sm animate-bounce">
-            Keep scrolling to see next item
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 lg:hidden">
+          <div className="bg-primary/90 text-primary-foreground px-4 py-2 rounded-full text-sm">
+            Timeline in progress...
           </div>
         </div>
       )}
