@@ -12,7 +12,6 @@ interface TimelineEvent {
 
 const ProjectTimeline = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
 
@@ -80,42 +79,30 @@ const ProjectTimeline = () => {
       if (!containerRef.current || !timelineRef.current) return;
 
       const container = containerRef.current;
-      const timeline = timelineRef.current;
       const containerRect = container.getBoundingClientRect();
-      const timelineRect = timeline.getBoundingClientRect();
-      
-      // Calculate scroll progress within the timeline section
       const viewportHeight = window.innerHeight;
       const sectionHeight = container.offsetHeight;
       const scrollableHeight = sectionHeight - viewportHeight;
-      
-      // Progress from 0 to 1 as we scroll through the timeline section
+
       let progress = 0;
-      
+
       if (containerRect.top <= 0 && containerRect.bottom >= viewportHeight) {
-        // We're inside the timeline section
         progress = Math.abs(containerRect.top) / scrollableHeight;
         progress = Math.max(0, Math.min(1, progress));
       } else if (containerRect.top < 0 && containerRect.bottom < viewportHeight) {
-        // We've scrolled past the timeline section
         progress = 1;
       }
 
       setScrollProgress(progress);
-      
-      // Calculate which timeline item should be active
-      const itemProgress = progress * timelineEvents.length;
-      const newActiveIndex = Math.min(Math.floor(itemProgress), timelineEvents.length - 1);
-      setActiveIndex(newActiveIndex);
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
+    handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [timelineEvents.length]);
+  }, []);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -146,23 +133,22 @@ const ProjectTimeline = () => {
     }
   };
 
-  // Calculate the height needed for smooth scrolling through all timeline items
-  const timelineHeight = timelineEvents.length * 100; // 100vh per item
+  const timelineHeight = timelineEvents.length * 100;
 
   return (
-    <div 
-      id="timeline" 
+    <div
+      id="timeline"
       ref={containerRef}
       className="relative bg-background"
-      style={{ height: `${timelineHeight}vh` }}
+      style={{ height: ${timelineHeight}vh }}
     >
-      {/* Animated background */}
+      {/* Background */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-48 h-48 bg-gradient-to-r from-green-500/5 to-cyan-500/5 rounded-full animate-bounce" style={{ animationDuration: '4s' }}></div>
       </div>
 
-      {/* Fixed header */}
+      {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border/20 py-4">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
@@ -174,53 +160,40 @@ const ProjectTimeline = () => {
         </div>
       </div>
 
-      {/* Timeline content area */}
-      <div 
+      {/* Timeline cards */}
+      <div
         ref={timelineRef}
         className="sticky top-0 h-screen flex items-center justify-center px-4 sm:px-6"
       >
         <div className="w-full max-w-4xl relative">
-          {/* Timeline cards stack */}
           <div className="relative">
             {timelineEvents.map((event, index) => {
-              // Calculate the position and visibility of each card
               const itemProgress = scrollProgress * timelineEvents.length;
               const cardProgress = Math.max(0, Math.min(1, itemProgress - index));
-              
-              // Cards start from below and move up as they become active
-              const translateY = (1 - cardProgress) * 100;
-              const opacity = cardProgress;
-              const scale = 0.9 + (cardProgress * 0.1);
-              const zIndex = timelineEvents.length - index;
-              
-              // Only show cards that are close to being active
-              const shouldShow = itemProgress >= index - 0.5;
+              const translateY = (1 - cardProgress) * 50;
+              const scale = 0.95 + (cardProgress * 0.05);
+              const zIndex = index;
 
               return (
                 <div
                   key={event.id}
                   className="absolute inset-0 transition-all duration-300 ease-out"
                   style={{
-                    transform: `translateY(${translateY}px) scale(${scale})`,
-                    opacity: shouldShow ? opacity : 0,
-                    zIndex: zIndex,
-                    pointerEvents: cardProgress > 0.5 ? 'auto' : 'none'
+                    transform: translateY(${translateY}px) scale(${scale}),
+                    zIndex,
                   }}
                 >
                   <div className="bg-card/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl border border-border/50 hover:border-primary/30 transition-all duration-300">
                     <div className="flex flex-col lg:flex-row items-start gap-6">
-                      {/* Timeline dot */}
                       <div className="flex-shrink-0 relative mx-auto lg:mx-0">
-                        <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} p-0.5 shadow-lg`}>
+                        <div className={w-16 h-16 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} p-0.5 shadow-lg}>
                           <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
                             {getStatusIcon(event.status)}
                           </div>
                         </div>
-                        {/* Glow effect */}
-                        <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} opacity-20 animate-pulse`}></div>
+                        <div className={absolute inset-0 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} opacity-20 animate-pulse}></div>
                       </div>
 
-                      {/* Content */}
                       <div className="flex-1 text-center lg:text-left">
                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                           <h3 className="text-2xl lg:text-3xl font-bold text-card-foreground mb-2 lg:mb-0">
@@ -231,16 +204,16 @@ const ProjectTimeline = () => {
                             {new Date(event.date).toLocaleDateString()}
                           </div>
                         </div>
-                        
+
                         <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
                           {event.description}
                         </p>
 
                         <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-4">
-                          <span className={`px-4 py-2 rounded-full text-sm font-medium text-white ${getCategoryBadgeColor(event.category)}`}>
+                          <span className={px-4 py-2 rounded-full text-sm font-medium text-white ${getCategoryBadgeColor(event.category)}}>
                             {event.category.charAt(0).toUpperCase() + event.category.slice(1)}
                           </span>
-                          
+
                           <div className="flex items-center gap-2">
                             <GitBranch className="h-4 w-4 text-muted-foreground" />
                             <span className="text-sm text-muted-foreground capitalize">
@@ -256,13 +229,6 @@ const ProjectTimeline = () => {
             })}
           </div>
         </div>
-      </div>
-
-      {/* Progress indicator - fixed position */}
-      <div className="fixed bottom-8 right-8 bg-background/90 backdrop-blur-sm rounded-full px-4 py-2 border border-border/50 shadow-lg z-20">
-        <span className="text-sm font-medium">
-          {activeIndex + 1} / {timelineEvents.length}
-        </span>
       </div>
 
       {/* Scroll hint */}
