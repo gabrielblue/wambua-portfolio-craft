@@ -186,12 +186,12 @@ const ProjectTimeline = () => {
                   <div className="bg-card/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl border border-border/50 hover:border-primary/30 transition-all duration-300">
                     <div className="flex flex-col lg:flex-row items-start gap-6">
                       <div className="flex-shrink-0 relative mx-auto lg:mx-0">
-                        <div className={w-16 h-16 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} p-0.5 shadow-lg}>
+                        <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} p-0.5 shadow-lg`}>
                           <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
                             {getStatusIcon(event.status)}
                           </div>
                         </div>
-                        <div className={absolute inset-0 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} opacity-20 animate-pulse}></div>
+                        <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${getCategoryColor(event.category)} opacity-20 animate-pulse`}></div>
                       </div>
 
                       <div className="flex-1 text-center lg:text-left">
@@ -210,7 +210,7 @@ const ProjectTimeline = () => {
                         </p>
 
                         <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-4">
-                          <span className={px-4 py-2 rounded-full text-sm font-medium text-white ${getCategoryBadgeColor(event.category)}}>
+                          <span className={`px-4 py-2 rounded-full text-sm font-medium text-white ${getCategoryBadgeColor(event.category)}`}>
                             {event.category.charAt(0).toUpperCase() + event.category.slice(1)}
                           </span>
 
