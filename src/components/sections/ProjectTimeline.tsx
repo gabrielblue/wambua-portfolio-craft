@@ -140,7 +140,7 @@ const ProjectTimeline = () => {
       id="timeline"
       ref={containerRef}
       className="relative bg-background"
-      style={{ height: ${timelineHeight}vh }}
+      style={{ height: `${timelineHeight}vh` }}
     >
       {/* Background */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
@@ -179,7 +179,7 @@ const ProjectTimeline = () => {
                   key={event.id}
                   className="absolute inset-0 transition-all duration-300 ease-out"
                   style={{
-                    transform: translateY(${translateY}px) scale(${scale}),
+                    transform: `translateY(${translateY}px) scale(${scale})`,
                     zIndex,
                   }}
                 >
