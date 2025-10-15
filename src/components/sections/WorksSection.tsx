@@ -132,17 +132,17 @@ const WorksSection = () => {
         <div className="flex flex-col gap-3 items-center mb-12 sm:mb-16">
           <h1 className="font-bold underline text-2xl sm:text-3xl text-foreground">WORKS.</h1>
           <h1 className="text-2xl sm:text-3xl text-foreground font-semibold">Works & Projects</h1>
-          <p className="w-full sm:w-3/4 lg:w-1/2 text-center text-gray-text text-sm sm:text-base">
+          <p className="w-full sm:w-3/4 lg:w-1/2 text-center text-muted-foreground text-sm sm:text-base">
             I help designers, small agencies, and businesses bring their ideas to life. Powered by Figma, VS Code, and coffee, I turn your requirements into well-designed websites.
           </p>
         </div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {works.map((work, index) => (
+        {works.map((work, index) => (
             <div 
               key={work.id}
-              className="group relative overflow-hidden rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2"
+              className="group relative overflow-hidden rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2 border border-border"
             >
               <div className="aspect-video relative overflow-hidden">
                 <img 
@@ -154,17 +154,17 @@ const WorksSection = () => {
                     target.src = 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800';
                   }}
                 />
-                <div className="absolute top-2 right-2 bg-blue-primary text-white px-2 py-1 rounded-md text-xs font-medium">
+                <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 rounded-md text-xs font-medium">
                   {work.tech_stack}
                 </div>
                 {work.is_featured && (
-                  <div className="absolute top-2 left-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-md text-xs font-medium">
+                  <div className="absolute top-2 left-2 bg-accent text-accent-foreground px-2 py-1 rounded-md text-xs font-medium">
                     Featured
                   </div>
                 )}
               </div>
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
-                <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
+              <div className="absolute inset-0 bg-background/90 backdrop-blur-sm bg-opacity-0 group-hover:bg-opacity-95 transition-all duration-300 flex items-center justify-center">
+                <div className="text-foreground text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
                   <h3 className="font-semibold text-lg mb-2">{work.title}</h3>
                   <p className="text-sm mb-4">{work.description}</p>
                   <div className="flex gap-2 justify-center">
@@ -173,7 +173,7 @@ const WorksSection = () => {
                         href={work.github_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-white text-foreground px-4 py-2 rounded-md hover:bg-gray-100 transition-colors inline-block text-sm"
+                        className="bg-card text-card-foreground border border-border px-4 py-2 rounded-md hover:bg-muted transition-colors inline-block text-sm"
                       >
                         View on GitHub
                       </a>

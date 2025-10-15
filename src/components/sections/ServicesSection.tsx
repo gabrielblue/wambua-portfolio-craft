@@ -145,7 +145,7 @@ const ServicesSection = () => {
           <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl mb-4 text-foreground">
             Services Provided?
           </h3>
-          <p className="max-w-xl mx-auto text-gray-text text-sm sm:text-base">
+          <p className="max-w-xl mx-auto text-muted-foreground text-sm sm:text-base">
             I offer a wide range of services to help you achieve your goals. Whether you need assistance with website design, marketing, or anything in between, we've got you covered. Here are some of the services we provide:
           </p>
         </div>
@@ -155,16 +155,16 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div 
               key={service.id}
-              className="group relative p-6 rounded-lg shadow-card hover:shadow-card-hover bg-card text-center transition-all duration-500 ease-in-out transform hover:-translate-y-2"
+              className="group relative p-6 rounded-lg shadow-card hover:shadow-card-hover bg-card border border-border text-center transition-all duration-500 ease-in-out transform hover:-translate-y-2"
             >
               <div className={`w-16 h-16 rounded-full ${service.gradient} flex items-center justify-center mx-auto transition-transform duration-300 transform group-hover:scale-110 text-2xl`}>
                 {service.icon}
               </div>
               <div className="mt-7">
-                <h3 className="text-lg font-medium hover:text-blue-primary transition-colors text-card-foreground mb-3">
+                <h3 className="text-lg font-medium hover:text-primary transition-colors text-card-foreground mb-3">
                   {service.name}
                 </h3>
-                <p className="text-gray-text text-sm sm:text-base leading-relaxed line-clamp-4">
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed line-clamp-4">
                   {service.description}
                 </p>
               </div>

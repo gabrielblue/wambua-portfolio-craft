@@ -28,8 +28,8 @@ const Navigation = () => {
   return (
     <nav className={`w-full py-3 shadow-lg fixed top-0 z-50 transition-all duration-500 ease-in-out transform ${
       isScrolled 
-        ? 'bg-blue-light/95 backdrop-blur-md py-2 shadow-xl border-b border-gray-light/20' 
-        : 'bg-blue-light py-3'
+        ? 'bg-card/95 backdrop-blur-md py-2 shadow-xl border-b border-border' 
+        : 'bg-card py-3'
     }`}>
       <div className="container mx-auto flex items-center justify-between px-4 sm:px-6">
         {/* Logo and Brand */}
@@ -38,7 +38,7 @@ const Navigation = () => {
             <div 
               className={`transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:rotate-6 ${
                 isScrolled ? 'w-6 h-6' : 'w-8 h-8'
-              } bg-gradient-blue rounded-lg flex items-center justify-center text-white font-bold text-sm`}
+              } bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold text-sm`}
             >
               GW
             </div>
@@ -53,7 +53,7 @@ const Navigation = () => {
         
         {/* Navigation Links - Desktop */}
         <div className="hidden md:flex items-center space-x-8">
-          <ul className="flex space-x-8 text-gray-text font-semibold uppercase text-sm">
+          <ul className="flex space-x-8 text-muted-foreground font-semibold uppercase text-sm">
             {['home', 'about', 'services', 'works', 'contact'].map((section, index) => (
               <li key={section} className="relative group">
                 <button 
@@ -62,8 +62,8 @@ const Navigation = () => {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {section === 'home' ? 'Homepage' : section === 'about' ? 'About Me' : section.charAt(0).toUpperCase() + section.slice(1)}
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-                  <span className="absolute inset-0 bg-gradient-blue/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute inset-0 bg-primary/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
                 </button>
               </li>
             ))}
@@ -79,7 +79,7 @@ const Navigation = () => {
             onClick={toggleMenu}
             className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 transform hover:rotate-12 group"
           >
-            <div className="absolute inset-0 bg-gradient-blue/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-primary/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             {isMenuOpen ? 
               <X size={24} className="transform rotate-180 transition-transform duration-300" /> : 
               <Menu size={24} className="group-hover:scale-110 transition-transform duration-300" />
