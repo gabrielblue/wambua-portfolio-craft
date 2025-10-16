@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/integrations/supabase/client'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -6,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { MessageCircle, Send, User, Clock, Trash2, Settings, Briefcase } from 'lucide-react'
+import { MessageCircle, Send, User, Clock, Trash2, Settings, Briefcase, LogOut } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { ServiceManager } from '@/components/admin/ServiceManager'
 import { WorkManager } from '@/components/admin/WorkManager'
@@ -37,6 +38,21 @@ export default function AdminDashboard() {
   const [replyMessage, setReplyMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut()
+    
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to log out',
+        variant: 'destructive'
+      })
+    } else {
+      navigate('/auth')
+    }
+  }
 
   useEffect(() => {
     fetchConversations()
@@ -241,9 +257,19 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">Manage your portfolio content and customer conversations</p>
+        <div className="mb-6 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+            <p className="text-muted-foreground">Manage your portfolio content and customer conversations</p>
+          </div>
+          <Button 
+            variant="outline" 
+            onClick={handleLogout}
+            className="flex items-center gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
         </div>
 
         <Tabs defaultValue="conversations" className="space-y-6">
